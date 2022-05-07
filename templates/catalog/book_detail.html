@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% block content %}
+<h1>Название книги: {{ book.title }}</h1>
+<p><strong>Жанр: </strong>{{book.genre}}</p>
+<p><strong>Аннотация: </strong>{{book.summary}}</p>
+<p><strong>ISBN: </strong>{{book.isbn}}</p>
+<p><strong>Язык: </strong>{{book.language}}</p>
+{% for author in book.author.all %}
+<p><strong>Автор:</strong>
+    <a href="{%url 'authors' %}">
+        {{author.first_name}}
+        {{author.last_name}}
+    </a></p>
+{% endfor %}
+<div style="margin-left:20px;margin-top:20px">
+    <h4>Количество экземпляров книг в БД</h4>
+    {% for сору in book.bookinstance_set.all %}
+    <hr>
+    <p class="{% if copy.status == 1 %} text-success
+    {% elif copy.status == 2 %} text-danger
+    {% else %} text-warning
+    {% endif %}"> {{ сору.status }}</p>
+    <p><strong>Издaтeльcтвo:</strong> {{сору.imprint}}</p>
+    <p class="text-muted"><strong>Инвeнтapный нoмep:</strong> {{сору.inv_nom}}</p>
+    <p><strong>Cтaтyc экземпляра книги в БД:</strong> {{ сору.status }}</p>
+    {% endfor %}
+</div>
+{% endblock %}
+<p><strong>Aвтop:</strong>
+    <a href="{% url 'authors' %}">{{ author.firs_name }}  {{author.last_name}}</a>
+</p>
